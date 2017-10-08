@@ -38,7 +38,7 @@ namespace CoreTestProject
         /// <summary>
         /// 测试一个数独的有效性
         /// </summary>
-        public void TestValid(int[,] puzzle)
+        public bool TestValid(int[,] puzzle)
         {
             const int SIZE = 9;
             for (int i = 0; i < SIZE; i++)
@@ -53,10 +53,11 @@ namespace CoreTestProject
                         {
                             outputfile.Write("i = {0}, j = {1};", i, j);
                         }
+                        return false;
                     }
-                    Assert.AreEqual(true, real);
                 }
             }
+            return true;
         }
 
         [TestMethod]
@@ -111,7 +112,7 @@ namespace CoreTestProject
                 { 4, 5, 2, 7, 3, 9, 1, 8, 6}
             };
 
-            TestValid(grid);
+            Assert.AreEqual(true, TestValid(grid));
         }
 
         [TestMethod]
@@ -129,7 +130,7 @@ namespace CoreTestProject
                 {7, 2, 3, 4, 9, 6, 1, 8, 5}
                 };
 
-            TestValid(puzzle);
+            Assert.AreEqual(true, TestValid(puzzle));
         }
 
         [TestMethod]
@@ -144,9 +145,10 @@ namespace CoreTestProject
                 {6, 4, 8, 7, 1, 2, 5, 3, 9},
                 {8, 9, 6, 5, 3, 1, 4, 7, 2},
                 {7, 2, 5, 4, 9, 6, 1, 8, 3},
-                {4, 1, 3, 8, 2, 7, 6, 9, 5}
+                {4, 1, 3, 8, 2, 7, 6, 2, 5}
                 };
-            TestValid(puzzle);
+
+            Assert.AreEqual(false, TestValid(puzzle));
         }
     }
 }
