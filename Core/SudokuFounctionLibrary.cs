@@ -24,6 +24,13 @@ namespace Core
             return MyRandomNumbers.ToList();
         }
 
+        /// <summary>
+        /// 判断数独中一个格子[i,j]是否填充成功
+        /// </summary>
+        /// <param name="puzzle">存储数独中所有的数</param>
+        /// <param name="i">待检测格子的位置：第i行</param>
+        /// <param name="j">待检测格子的位置：第j列</param>
+        /// <returns>是否填充成功</returns>
         public static bool FillSuccess(int[,] puzzle, int i, int j)
         {
             // check column
