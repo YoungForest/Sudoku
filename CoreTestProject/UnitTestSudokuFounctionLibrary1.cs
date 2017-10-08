@@ -150,5 +150,22 @@ namespace CoreTestProject
 
             Assert.AreEqual(false, TestValid(puzzle));
         }
+
+        /// <summary>
+        /// 测试接口1 void generate(int number, ref int[][,] result) 的正确性
+        /// </summary>
+        [TestMethod]
+        public void TestGenerate1()
+        {
+            const int number = 10;
+            int[][,] result = new int[number][,];
+
+            SudokuFounctionLibrary.generate(number, ref result);
+
+            for (int i = 0; i < number; i++)
+            {
+                Assert.AreEqual(true, TestValid(result[i]));
+            }
+        }
     }
 }
