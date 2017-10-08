@@ -60,5 +60,18 @@ namespace Core
 
             return true;
         }
+
+        static void generate(int number, int[][,] result)
+        {
+            Generator g = new Generator();
+            try
+            {
+                g.FillNextGrid(0, 0);
+            }
+            catch(EnoughResultsException)
+            {
+                result = g.results.ToArray();
+            }
+        }
     }
 }
