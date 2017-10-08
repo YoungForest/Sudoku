@@ -15,7 +15,13 @@ namespace Core
         const int LAST = 8;
         public int count = 0;
         public int bound = 0;
-        public List<int[,]> results = new List<int[,]>();
+        public int[][,] results;
+
+        public Generator(int number)
+        {
+            this.bound = number;
+            results = new int[number][,];
+        }
 
         /// <summary>
         /// 填充数独的下一个格子
@@ -51,7 +57,7 @@ namespace Core
         /// </summary>
         private void PrintResult()
         {
-            results.Add(grid);
+            results[count] = (int[,])grid.Clone();
             count++;
             if (count >= bound)
                 throw new EnoughResultsException();

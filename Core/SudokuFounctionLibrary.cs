@@ -61,9 +61,9 @@ namespace Core
             return true;
         }
 
-        static void generate(int number, int[][,] result)
+        public static void generate(int number, ref int[][,] result)
         {
-            Generator g = new Generator();
+            Generator g = new Generator(number);
             try
             {
                 g.FillNextGrid(0, 0);
