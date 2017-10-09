@@ -9,28 +9,13 @@ namespace Core
 {
     public class Solver
     {
-        public int[,] puzzle = new int[9, 9];
+        public int[,] puzzle;
         public const int SIZE = 8;
+        public bool success = false;
 
-        public void ReadIntoPuzzle(string[] lines)
+        public Solver(int [,] puzzle)
         {
-            for (int i = 0; i <= SIZE; i++)
-            {
-                char[] delimiterChars = { ' ' };
-                string[] words = lines[i].Split(delimiterChars);
-
-                for (int j = 0; j <= SIZE; j++)
-                {
-                    try
-                    {
-                        puzzle[i, j] = Int32.Parse(words[j]);
-                    }
-                    catch (FormatException ex)
-                    {
-                        System.Console.WriteLine(ex.Message);
-                    }
-                }
-            }
+            this.puzzle = puzzle;
         }
 
         public void FillNextpuzzle(int i, int j)
@@ -59,6 +44,7 @@ namespace Core
                 {
                     if (i == SIZE && j == SIZE)
                     {
+                        success = true;
                         throw new PuzzleCompleteException();
                     }
                     else
@@ -112,24 +98,6 @@ namespace Core
             catch (PuzzleCompleteException ex)
             {
                 System.Console.WriteLine(ex);
-            }
-        }
-
-        public void AppendResultToFile(string v, bool space)
-        {
-            using (System.IO.StreamWriter outputfile =
-         new System.IO.StreamWriter(v, true))
-            {
-                if (space)
-                    outputfile.WriteLine();
-                for (int i = 0; i <= SIZE; i++)
-                {
-                    for (int j = 0; j <= SIZE; j++)
-                    {
-                        outputfile.Write("{0} ", puzzle[i, j]);
-                    }
-                    outputfile.WriteLine();
-                }
             }
         }
     }

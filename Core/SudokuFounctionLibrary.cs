@@ -61,6 +61,11 @@ namespace Core
             return true;
         }
 
+        /// <summary>
+        /// 生成数独终局
+        /// </summary>
+        /// <param name="number">数独终局的数目</param>
+        /// <param name="result">存储终局的数组</param>
         public static void generate(int number, ref int[][,] result)
         {
             Generator g = new Generator(number);
@@ -72,6 +77,86 @@ namespace Core
             {
                 result = g.results.ToArray();
             }
+        }
+
+        /// <summary>
+        /// 得到特定难度特定数目的数独残局
+        /// </summary>
+        /// <param name="number">生成残局的数目</param>
+        /// <param name="mode">生成残局的难度，只能是1（简单）,2（中等）,3（困难）</param>
+        /// <param name="result">存储残局的数组</param>
+        public static void generate(int number, int mode, ref int[][,] result)
+        {
+
+        }
+
+        /// <summary>
+        /// 生成数独残局
+        /// </summary>
+        /// <param name="number">残局数目</param>
+        /// <param name="lower">挖空的下界</param>
+        /// <param name="upper">挖空的上界</param>
+        /// <param name="unique">是否有唯一解</param>
+        /// <param name="result">存储结果</param>
+        public static void generate(int number, int lower, int upper, bool unique, ref int[][,] result)
+        {
+            generate(number, ref result);
+
+            for (int index = 0; index < number; index ++)
+            {
+                // 挖空
+                var rnd = new Random();
+                var digNumbers = new int[9];
+
+                // 生成9个随机数 range: 2~9;
+                do
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        digNumbers[i] = rnd.Next(2, 10);
+                    }
+                }
+                while (digNumbers.Sum() > upper || digNumbers.Sum() < lower);
+
+                // 挖空，即标志该位为0
+                var grids = new int[,] { {0, 0}, {0, 1}, {0, 2},
+                                         {1, 0}, {1, 1}, {1, 2},
+                                         {2, 0}, {2, 1}, {2, 2} };
+                int[] numbers = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+
+                for (int i = 0; i < 9; i++)
+                {
+                    int basex = (i / 3) * 3;
+                    int basey = (i % 3) * 3;
+                    int[] MyRandomNumbers = numbers.OrderBy(x => rnd.Next()).ToArray();
+
+                    for (int j = 0; j < digNumbers[i]; j++)
+                    {
+                        int digx = grids[MyRandomNumbers[j], 0];
+                        int digy = grids[MyRandomNumbers[j], 1];
+
+                        result[index][basex + digx, basey + digy] = 0;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///  求解一个数独
+        /// </summary>
+        /// <param name="puzzle">被求解的数独</param>
+        /// <param name="solution">求解结果</param>
+        /// <returns></returns>
+        public static bool solve(int[,] puzzle, ref int[,] solution)
+        {
+            var solver = new Solver(puzzle);
+
+            solver.Solve();
+
+            if (solver.success)
+                solution = solver.puzzle;
+
+            return solver.success;
         }
     }
 }
