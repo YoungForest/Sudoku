@@ -59,7 +59,7 @@ namespace Core
         }
 
         // 由于所填格子之后的数是定的，所以无法与Generater共用此函数
-        private bool FillSuccess(int i, int j)
+        public bool FillSuccess(int i, int j)
         {
             // check column
             for (int ii = 0; ii <= SIZE; ii++)
