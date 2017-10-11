@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SudokuData;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Core
 {
@@ -83,10 +85,27 @@ namespace Core
         /// 得到特定难度特定数目的数独残局
         /// </summary>
         /// <param name="number">生成残局的数目</param>
-        /// <param name="mode">生成残局的难度，只能是1（简单）,2（中等）,3（困难）</param>
+        /// <param name="mode">生成残局的难度，只能是1（简单）,2（中等）,3（困难）,其他按困难处理</param>
         /// <param name="result">存储残局的数组</param>
         public static void generate(int number, int mode, ref int[][,] result)
         {
+            switch (mode)
+            {
+                case 1:
+                    generate(number, 45, 49, false,ref result);
+                    break;
+                case 2:
+                    generate(number, 50, 54, false, ref result);
+                    break;
+                case 3:
+                    generate(number, 55, 59, false, ref result);
+                    break;
+                default:
+                    generate(number, 55, 59, false, ref result);
+                    break;
+
+            }
+
 
         }
 
@@ -101,7 +120,8 @@ namespace Core
         public static void generate(int number, int lower, int upper, bool unique, ref int[][,] result)
         {
             generate(number, ref result);
-
+            
+            int theNumber = 0;
             for (int index = 0; index < number; index ++)
             {
                 // 挖空
@@ -117,7 +137,9 @@ namespace Core
                     }
                 }
                 while (digNumbers.Sum() > upper || digNumbers.Sum() < lower);
-
+                int target = digNumbers.Sum();
+                int diged = 0;
+                var tried = new int[9, 9];
                 // 挖空，即标志该位为0
                 var grids = new int[,] { {0, 0}, {0, 1}, {0, 2},
                                          {1, 0}, {1, 1}, {1, 2},
@@ -134,11 +156,52 @@ namespace Core
                     {
                         int digx = grids[MyRandomNumbers[j], 0];
                         int digy = grids[MyRandomNumbers[j], 1];
-
+                        theNumber = result[index][basex + digx, basey + digy];
                         result[index][basex + digx, basey + digy] = 0;
+                        tried[basex + digx, basey + digy] = 1;
+                        diged++;
+                        if (unique)
+                        {
+                            Table t = new Table();
+                            t.creat(result[index]);
+                            int s = t.solve();
+                            if (s > 1)
+                            {
+                                result[index][basex + digx, basey + digy] = theNumber;
+                                diged--;
+                            }
+                        }
                     }
                 }
+                if (unique)
+                {
+                    while (diged < target)
+                    {
+                        int dx = 0;
+                        int dy = 0;
+                        do
+                        {
+                            dx = rnd.Next(0, 9);
+                            dy = rnd.Next(0, 9);
+                        }
+                        while (tried[dx, dy] == 0);
+                        result[index][dx, dy] = 0;
+                        tried[dx, dy] = 1;
+                        diged++;
+                        Table t = new Table();
+                        t.creat(result[index]);
+                        int s = t.solve();
+                        if (s > 1)
+                        {
+                            result[index][dx, dy] = theNumber;
+                            diged--;
+                        }
+                    }
+                }
+
             }
+
+
         }
 
         /// <summary>
