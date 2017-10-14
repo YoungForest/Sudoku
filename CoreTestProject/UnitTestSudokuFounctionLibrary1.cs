@@ -176,10 +176,12 @@ namespace CoreTestProject
         public void TestGenerateUnique()
         {
             int[][,] result = null;
-            const int number = 1;
+            const int number = 20;
             const int lower = 20;
             const int upper = 55;
             const int size = 9;
+            int[] keys = new int[number];
+            int[] digs = new int[number];
             SudokuFounctionLibrary.generate(number, lower, upper, true, ref result);
 
             // test
@@ -198,23 +200,27 @@ namespace CoreTestProject
                             count++;
                     }
                 }
+                digs[i] = count;
                 bool real = count <= upper && count >= lower;
                 bool expected = true;
 
-                Assert.AreEqual(expected, real);
+                //Assert.AreEqual(expected, real);
 
                 // 测试唯一解
-                Solver s = new Solver(puzzle);
+                /*Solver s = new Solver(puzzle);
                 s.Solve();
                 real = s.IsUniqueSolution();
 
-                Assert.AreEqual(expected, real);
-                /*Table t = new Table();
+                Assert.AreEqual(expected, real);*/
+                Table t = new Table();
                 t.creat(puzzle);
-                int re=t.solve();
-                Assert.AreEqual(1, re);*/
-                
+                keys[i] = t.solve();
+                Assert.AreEqual(1, keys[i]);
+
             }
+            //Assert.AreEqual(1, keys[0]);
+            //Assert.AreEqual(true, digs[0] <= upper && digs[0] >= lower);
+
         }
 
         

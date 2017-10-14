@@ -165,7 +165,7 @@ namespace Core
                             Table t = new Table();
                             t.creat(result[index]);
                             int s = t.solve();
-                            if (s > 1)
+                            if (s !=1)
                             {
                                 result[index][basex + digx, basey + digy] = theNumber;
                                 diged--;
@@ -185,13 +185,14 @@ namespace Core
                             dy = rnd.Next(0, 9);
                         }
                         while (tried[dx, dy] == 0);
+                        theNumber = result[index][dx, dy];
                         result[index][dx, dy] = 0;
                         tried[dx, dy] = 1;
                         diged++;
                         Table t = new Table();
                         t.creat(result[index]);
                         int s = t.solve();
-                        if (s > 1)
+                        if (s != 1)
                         {
                             result[index][dx, dy] = theNumber;
                             diged--;
