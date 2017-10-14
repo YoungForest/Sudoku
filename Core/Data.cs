@@ -460,7 +460,7 @@ namespace SudokuData
                             point--;
                             if (point < 0)
                             {
-                                //Console.WriteLine("无解");
+                                Console.WriteLine("无解");
                                 return -1;
                             }
                         }
@@ -469,8 +469,8 @@ namespace SudokuData
                             if (tabletry[point].check() == 1)
                             {
                                
-                                //Console.WriteLine("over");
-                                //tabletry[point].printtable();
+                                Console.WriteLine("over");
+                                tabletry[point].printtable();
                                 nOfKeys++;
                                 point--;
                                 if (point < 0)
@@ -499,7 +499,7 @@ namespace SudokuData
                 }
                 else
                 {
-                    //Console.WriteLine("无解");
+                    Console.WriteLine("无解");
                     return -1;
                 }
                 

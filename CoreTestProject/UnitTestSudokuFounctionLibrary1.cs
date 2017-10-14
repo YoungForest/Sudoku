@@ -176,7 +176,7 @@ namespace CoreTestProject
         public void TestGenerateUnique()
         {
             int[][,] result = null;
-            const int number = 20;
+            const int number = 1;
             const int lower = 20;
             const int upper = 55;
             const int size = 9;
@@ -207,15 +207,15 @@ namespace CoreTestProject
                 //Assert.AreEqual(expected, real);
 
                 // 测试唯一解
-                /*Solver s = new Solver(puzzle);
+                Solver s = new Solver(puzzle);
                 s.Solve();
                 real = s.IsUniqueSolution();
 
-                Assert.AreEqual(expected, real);*/
-                Table t = new Table();
+                Assert.AreEqual(expected, real);
+                /*Table t = new Table();
                 t.creat(puzzle);
                 keys[i] = t.solve();
-                Assert.AreEqual(1, keys[i]);
+                Assert.AreEqual(1, keys[i]);*/
 
             }
             //Assert.AreEqual(1, keys[0]);

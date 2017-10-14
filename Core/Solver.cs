@@ -21,6 +21,7 @@ namespace Core
 
         public bool IsUniqueSolution()
         {
+            Console.WriteLine("count:" + count);
             return count == 1;
         }
 
@@ -51,9 +52,32 @@ namespace Core
                     if (i == SIZE && j == SIZE)
                     {
                         success = true;
+
+                        for (int o = 0; o < 9; o++)
+                        {
+                            for (int p = 0; p < 9; p++)
+                            {
+                                Console.Write(puzzle[o, p]);
+                                if (p == 8)
+                                {
+                                    Console.Write("\n");
+                                }
+                                else
+                                {
+                                    Console.Write(" ");
+                                }
+                            }
+                            if (o == 8)
+                            {
+                                Console.Write("\n");
+                            }
+                        }
                         count++;
                         if (count > 1)
+                        {
+                            Console.WriteLine("count in if:" + count);
                             throw new PuzzleCompleteException();
+                        }
                     }
                     else
                     {

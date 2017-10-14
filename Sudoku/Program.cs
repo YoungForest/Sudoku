@@ -27,8 +27,71 @@ namespace Sudoku
             Table t = new Table();
             t.creat(result1);
             int s = t.solve();
-            Console.WriteLine(s);
-            Console.ReadLine();*/
+            Console.WriteLine(s);*/
+
+            int[][,] result = null;
+            const int number = 1;
+            const int lower = 20;
+            const int upper = 55;
+            const int size = 9;
+            int[] keys = new int[number];
+            int[] digs = new int[number];
+            SudokuFounctionLibrary.generate(number, lower, upper, true, ref result);
+
+            // test
+            for (int i = 0; i < number; i++)
+            {
+                int[,] puzzle = result[i];
+
+                // 测试挖空数目
+                int count = 0;
+
+                for (int j = 0; j < size; j++)
+                {
+                    for (int k = 0; k < size; k++)
+                    {
+                        if (puzzle[j, k] == 0)
+                            count++;
+                    }
+                }
+                digs[i] = count;
+                Console.WriteLine("puzzle:");
+                for (int o = 0; o < 9; o++)
+                {
+                    for (int p = 0; p < 9; p++)
+                    {
+                        Console.Write(puzzle[o, p]);
+                        if (p == 8)
+                        {
+                            Console.Write("\n");
+                        }
+                        else
+                        {
+                            Console.Write(" ");
+                        }
+                    }
+                    if (o == 8)
+                    {
+                        Console.Write("\n");
+                    }
+                }
+                Table t = new Table();
+                t.creat(puzzle);
+                int r=t.solve();
+                Console.WriteLine(r);
+
+                //Assert.AreEqual(expected, real);
+
+                // 测试唯一解
+                /*Solver s = new Solver(puzzle);
+                s.Solve();*/
+               
+
+                //Assert.AreEqual(expected, real);
+            }
+
+
+             Console.ReadLine();
 
         }
 
