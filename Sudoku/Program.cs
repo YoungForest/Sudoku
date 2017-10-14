@@ -13,7 +13,7 @@ namespace Sudoku
         static void Main(string[] args)
         {
 
-            Test();
+            
 
 
 
