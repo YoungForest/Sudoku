@@ -222,7 +222,8 @@ namespace Core
 
             return solver.success;
         }
-        //打印数独
+       
+        //打印数独到标准输出
         public static void printTable(int[,] puzzle)
         {
             for (int o = 0; o < 9; o++)
@@ -242,6 +243,35 @@ namespace Core
                 if (o == 8)
                 {
                     Console.Write("\n");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 输出数独到文件
+        /// </summary>
+        /// <param name="filename">目标文件路径</param>
+        /// <param name="results">存储数独</param>
+        public static void PrintPuzzleToFile(string filename, ref int[][,] results)
+        {
+            // clear the content of target file
+            using (System.IO.StreamWriter outputfile =
+     new System.IO.StreamWriter(filename))
+            {
+                const int SIZE = 9;
+                int len = results.Length;
+                for (int i = 0; i < len; i++)
+                {
+                    int[,] puzzle = results[i];
+                    for (int j = 0; j < SIZE; j++)
+                    {
+                        for (int k = 0; k < SIZE; k++)
+                        {
+                            outputfile.Write("{0} ", puzzle[j, k]);
+                        }
+                        outputfile.WriteLine();
+                    }
+                    outputfile.WriteLine();
                 }
             }
         }
