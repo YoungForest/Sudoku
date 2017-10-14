@@ -12,23 +12,37 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
-            /*int[,] result1 = {
-                {0,0,0,9,0,8,1,4,6 },
-                {0,0,0,3,0,0,9,0,7 },
-                {0,0,0,7,0,0,2,3,0 },
-                {1,2,0,0,0,6,7,0,0 },
-                {0,6,3,1,7,9,5,2,0 },
-                {7,0,9,4,0,0,6,1,0 },
-                {3,0,5,0,1,7,0,0,0 },
-                {0,7,1,0,0,0,0,0,0 },
-                {0,0,2,0,9,5,0,0,0 }
+
+            Test();
+
+
+
+        }
+
+        public static void TestSolve()
+        {
+            int[,] result1 = {
+                { 0 ,0 ,0 ,0 ,0 ,6 ,2 ,0 ,0 },
+                { 7, 0, 0 ,0 ,2 ,0 ,0, 3 ,1 },
+                { 0 ,0, 8, 3 ,0 ,0, 0, 0 ,6 },
+                { 0 ,0, 3, 0 ,0, 7 ,0 ,0 ,0 },
+                { 1 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 },
+                { 8 ,0 ,0, 0 ,6, 0 ,3, 0 ,4 },
+                { 2, 0 ,0 ,0, 7, 0, 4 ,0, 0 },
+                { 0, 4, 0 ,6 ,0 ,0, 0 ,0, 0 },
+                { 0, 8 ,0 ,2, 0, 0, 0, 5, 0 }
             };
 
             Table t = new Table();
             t.creat(result1);
             int s = t.solve();
-            Console.WriteLine(s);*/
+            Console.WriteLine(s);
 
+            Console.ReadLine();
+        }
+
+        public static void Test()
+        {
             int[][,] result = null;
             const int number = 1;
             const int lower = 20;
@@ -77,22 +91,20 @@ namespace Sudoku
                 }
                 Table t = new Table();
                 t.creat(puzzle);
-                int r=t.solve();
+                int r = t.solve();
                 Console.WriteLine(r);
 
                 //Assert.AreEqual(expected, real);
 
                 // 测试唯一解
-                /*Solver s = new Solver(puzzle);
-                s.Solve();*/
-               
+                Solver s = new Solver(puzzle);
+                s.Solve();
+                
+
 
                 //Assert.AreEqual(expected, real);
             }
-
-
-             Console.ReadLine();
-
+            Console.ReadLine();
         }
 
         /// <summary>

@@ -176,7 +176,7 @@ namespace CoreTestProject
         public void TestGenerateUnique()
         {
             int[][,] result = null;
-            const int number = 1;
+            const int number =20;
             const int lower = 20;
             const int upper = 55;
             const int size = 9;
