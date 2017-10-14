@@ -12,10 +12,16 @@ namespace Core
         public int[,] puzzle;
         public const int SIZE = 8;
         public bool success = false;
+        public int count = 0;
 
         public Solver(int [,] puzzle)
         {
             this.puzzle = puzzle;
+        }
+
+        public bool IsUniqueSolution()
+        {
+            return count == 1;
         }
 
         public void FillNextpuzzle(int i, int j)
@@ -45,7 +51,9 @@ namespace Core
                     if (i == SIZE && j == SIZE)
                     {
                         success = true;
-                        throw new PuzzleCompleteException();
+                        count++;
+                        if (count > 1)
+                            throw new PuzzleCompleteException();
                     }
                     else
                     {

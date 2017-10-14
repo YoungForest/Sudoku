@@ -61,6 +61,8 @@ namespace SudokuData
 
     
 
+    
+
     public class Table
     {
         Block[] blocks;
@@ -83,6 +85,7 @@ namespace SudokuData
             //初始化所有格子
             for (i = 0; i < 81; i++)
             {
+                this.blocks[i] = new Block();
                 this.blocks[i].id = i;
                 this.blocks[i].row = i / 9;
                 this.blocks[i].column = i % 9;
@@ -97,6 +100,7 @@ namespace SudokuData
             //初始化行信息
             for (i = 0; i < 9; i++)
             {
+                this.rows[i] = new Row();
                 this.rows[i].id = i;
                 for (j = 0; j < 9; j++)
                 {
@@ -108,6 +112,7 @@ namespace SudokuData
             //初始化列信息
             for (i = 0; i < 9; i++)
             {
+                this.columns[i] = new Column();
                 this.columns[i].id = i;
                 for (j = 0; j < 9; j++)
                 {
@@ -119,12 +124,24 @@ namespace SudokuData
             //初始化块信息
             for (i = 0; i < 9; i++)
             {
+                this.areas[i] = new Area();
                 this.areas[i].id = i;
                 for (j = 0; j < 9; j++)
                 {
                     this.areas[i].blockids[j] = (i / 3 * 3 + j / 3) * 9 + (i % 3 * 3 + j % 3);
                     this.areas[i].need[j + 1] = 1;
                     this.areas[i].count[j + 1] = 9;
+                }
+            }
+        }
+
+        public void copy(Table t)
+        {
+            for(int i = 0; i < 81; i++)
+            {
+                if (t.blocks[i].numbers[0] != 0)
+                {
+                    this.fill(i, t.blocks[i].numbers[0]);
                 }
             }
         }
@@ -246,7 +263,7 @@ namespace SudokuData
                 }
                 else if (this.blocks[i].poss == 0 && this.blocks[i].numbers[0] == 0)
                 {
-                    //cout << "第" << i / 9 + 1 << "行 " << i % 9 + 1 << "列矛盾\n";
+                    //Console.WriteLine("第" + (i / 9 + 1) + "行 "+(i % 9 + 1) + "列矛盾");
                     return -1;
                 }
             }
@@ -388,6 +405,28 @@ namespace SudokuData
             return 0;
         }
 
+        void printtable()
+        {
+            int i, j;
+            Console.Write("\n");
+            for (i = 0; i < 9; i++)
+            {
+                for (j = 0; j < 9; j++)
+                {
+                    
+                    Console.Write(this.blocks[i * 9 + j].numbers[0]);
+                    if (j == 8)
+                    {
+                        Console.Write("\n");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
+                }
+            }
+        }
+
         public int solve()
         {
             Table[] tabletry=new Table[200];
@@ -402,8 +441,10 @@ namespace SudokuData
             end=this.check();
             if (end == 0)
             {
-                tabletry[point] = this;
+                tabletry[point] = new Table();
+                tabletry[point].copy(this);
                 point++;
+                tabletry[point] = new Table();
                 tabletry[point] = this.fill(tryi, tryn[0]);
                 point--;
                 tabletry[point].fill(tryi, tryn[1]);
@@ -413,12 +454,13 @@ namespace SudokuData
                     while (true)
                     {
                         error = tabletry[point].work1();
+                        
                         if (error == -1)
                         {
                             point--;
                             if (point < 0)
                             {
-                                //cout << "无解" << endl;
+                                //Console.WriteLine("无解");
                                 return -1;
                             }
                         }
@@ -426,30 +468,38 @@ namespace SudokuData
                         {
                             if (tabletry[point].check() == 1)
                             {
-                                //cout << "over" << endl;
+                               
+                                //Console.WriteLine("over");
+                                //tabletry[point].printtable();
                                 nOfKeys++;
                                 point--;
                                 if (point < 0)
                                 {
                                     break;
                                 }
+                               
                             }
                             else
                             {
+                                tryi = tabletry[point].tryi;
+                                tryn[0]= tabletry[point].tryn[0];
+                                tryn[1] = tabletry[point].tryn[1];
                                 point++;
-                                tabletry[point] = tabletry[point - 1];
-                                point++;
-                                tabletry[point] = tabletry[point - 2].fill(tryi, tryn[0]);
+                                tabletry[point] = new Table();
+                                tabletry[point].copy(tabletry[point - 1]);
                                 point--;
                                 tabletry[point].fill(tryi, tryn[1]);
                                 point++;
+                                tabletry[point].fill(tryi, tryn[0]);
+                                
+                                
                             }
                         }
                     }
                 }
                 else
                 {
-                    //cout << "无解" << endl;
+                    //Console.WriteLine("无解");
                     return -1;
                 }
                 

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data.cs" />
     <Compile Include="EnoughResultsException.cs" />
     <Compile Include="Solver.cs" />
     <Compile Include="SudokuFounctionLibrary.cs" />
