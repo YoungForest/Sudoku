@@ -46,7 +46,7 @@ namespace Sudoku
                         Core.SudokuFounctionLibrary.ReadPuzzleFromFile(args[1], ref initPuzzles);
                         List<int[,]> results = new List<int[,]>();
 
-                        for(int i = 0; i < initPuzzles.Length; i++)
+                        for (int i = 0; i < initPuzzles.Length; i++)
                         {
                             int[,] result = null;
                             Core.SudokuFounctionLibrary.solve(initPuzzles[i], ref result);

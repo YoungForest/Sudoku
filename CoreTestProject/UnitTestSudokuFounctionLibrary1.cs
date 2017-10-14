@@ -213,7 +213,7 @@ namespace CoreTestProject
         public void TestGenerateUnique()
         {
             int[][,] result = null;
-            const int number =20;
+            const int number = 20;
             const int lower = 20;
             const int upper = 55;
             const int size = 9;
@@ -224,7 +224,7 @@ namespace CoreTestProject
             // test
             for (int i = 0; i < number; i++)
             {
-                int [,] puzzle = result[i];
+                int[,] puzzle = result[i];
 
                 // 测试挖空数目
                 int count = 0;

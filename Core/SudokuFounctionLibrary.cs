@@ -80,7 +80,7 @@ namespace Core
             {
                 g.FillNextGrid(0, 0);
             }
-            catch(EnoughResultsException)
+            catch (EnoughResultsException)
             {
                 result = g.results.ToArray();
             }
@@ -97,7 +97,7 @@ namespace Core
             switch (mode)
             {
                 case 1:
-                    generate(number, 45, 49, true,ref result);
+                    generate(number, 45, 49, true, ref result);
                     break;
                 case 2:
                     generate(number, 50, 54, true, ref result);
@@ -131,9 +131,9 @@ namespace Core
                 throw new BoundOutOfRange();
             }
             generate(number, ref result);
-            
+
             int theNumber = 0;
-            for (int index = 0; index < number; index ++)
+            for (int index = 0; index < number; index++)
             {
                 // 挖空
                 var rnd = new Random();
@@ -176,7 +176,7 @@ namespace Core
                             Table t = new Table();
                             t.creat(result[index]);
                             int s = t.solve();
-                            if (s !=1)
+                            if (s != 1)
                             {
                                 result[index][basex + digx, basey + digy] = theNumber;
                                 diged--;
@@ -233,7 +233,7 @@ namespace Core
 
             return solver.success;
         }
-       
+
         //打印数独到标准输出
         public static void printTable(int[,] puzzle)
         {
