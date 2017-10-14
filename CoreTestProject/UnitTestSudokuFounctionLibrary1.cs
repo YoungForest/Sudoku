@@ -14,6 +14,26 @@ namespace CoreTestProject
     public class UnitTestSudokuFounctionLibrary1
     {
         /// <summary>
+        /// 测试solve接口
+        /// </summary>
+        [TestMethod]
+        public void TestSolver()
+        {
+            int[,] puzzle = {{0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 8, 7, 0, 9, 3},
+                {0, 0, 4, 0, 0, 0, 2, 0, 0},
+                {0, 1, 2, 9, 0, 0, 0, 0, 4},
+                {9, 4, 7, 8, 2, 1, 5, 0, 0},
+                {5, 0, 8, 4, 7, 0, 0, 0, 0},
+                {0, 6, 0, 3, 1, 0, 0, 0, 0},
+                {1, 2, 0, 7, 9, 5, 0, 0, 8},
+                {8, 0, 0, 0, 4, 2, 0, 0, 5}};
+            int[,] result = null;
+
+            Core.SudokuFounctionLibrary.solve(puzzle, ref result);
+            Assert.AreEqual(true, TestValid(result));
+        }
+        /// <summary>
         /// 测试GenerateFillList方法，判断确实随机
         /// </summary>
         [TestMethod]

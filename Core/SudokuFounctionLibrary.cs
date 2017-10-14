@@ -217,7 +217,7 @@ namespace Core
             solver.Solve();
 
             if (solver.success)
-                solution = solver.puzzle;
+                solution = solver.solution;
 
             return solver.success;
         }

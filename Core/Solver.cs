@@ -10,13 +10,14 @@ namespace Core
     public class Solver
     {
         public int[,] puzzle;
+        public int[,] solution = new int[9,9];
         public const int SIZE = 8;
         public bool success = false;
         public int count = 0;
 
-        public Solver(int [,] puzzle)
+        public Solver(int [,] p)
         {
-            this.puzzle = puzzle;
+            puzzle = p;
         }
 
         public bool IsUniqueSolution()
@@ -31,6 +32,7 @@ namespace Core
                 if (i == SIZE && j == SIZE)
                 {
                     success = true;
+                    recordSolution();
                     count++;
                     if (count > 1)
                     {
@@ -58,6 +60,7 @@ namespace Core
                     {
                         success = true;
                         count++;
+                        recordSolution();
                         if (count > 1)
                         {
                             throw new PuzzleCompleteException();
@@ -115,6 +118,12 @@ namespace Core
             {
                 System.Console.WriteLine(ex);
             }
+        }
+        public void recordSolution()
+        {
+            for (int i = 0; i < 9; i++)
+                for (int j = 0; j < 9; j++)
+                    solution[i, j] = puzzle[i, j];
         }
     }
 
