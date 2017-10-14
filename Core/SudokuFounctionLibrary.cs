@@ -97,13 +97,13 @@ namespace Core
             switch (mode)
             {
                 case 1:
-                    generate(number, 45, 49, false,ref result);
+                    generate(number, 45, 49, true,ref result);
                     break;
                 case 2:
-                    generate(number, 50, 54, false, ref result);
+                    generate(number, 50, 54, true, ref result);
                     break;
                 case 3:
-                    generate(number, 55, 59, false, ref result);
+                    generate(number, 55, 59, true, ref result);
                     break;
                 default:
                     throw new ModeOutOfRange();
