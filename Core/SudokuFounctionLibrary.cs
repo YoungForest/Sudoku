@@ -222,5 +222,28 @@ namespace Core
 
             return solver.success;
         }
+        //打印数独
+        public static void printTable(int[,] puzzle)
+        {
+            for (int o = 0; o < 9; o++)
+            {
+                for (int p = 0; p < 9; p++)
+                {
+                    Console.Write(puzzle[o, p]);
+                    if (p == 8)
+                    {
+                        Console.Write("\n");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
+                }
+                if (o == 8)
+                {
+                    Console.Write("\n");
+                }
+            }
+        }
     }
 }

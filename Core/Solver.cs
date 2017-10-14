@@ -33,13 +33,16 @@ namespace Core
                     success = true;
                     count++;
                     if (count > 1)
+                    {
                         throw new PuzzleCompleteException();
+                    }
                 }
                 else
                 {
                     int nexti = j == SIZE ? i + 1 : i;
                     int nextj = j == SIZE ? 0 : j + 1;
                     FillNextpuzzle(nexti, nextj);
+                    return;
                 }
                 return;
             }
@@ -56,7 +59,9 @@ namespace Core
                         success = true;
                         count++;
                         if (count > 1)
+                        {
                             throw new PuzzleCompleteException();
+                        }
                     }
                     else
                     {

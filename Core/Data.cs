@@ -429,6 +429,7 @@ namespace SudokuData
 
         public int solve()
         {
+            
             Table[] tabletry=new Table[200];
             
             int nOfKeys = 0;
@@ -461,7 +462,7 @@ namespace SudokuData
                             if (point < 0)
                             {
                                 //Console.WriteLine("无解");
-                                return -1;
+                                return nOfKeys;
                             }
                         }
                         else
@@ -469,8 +470,8 @@ namespace SudokuData
                             if (tabletry[point].check() == 1)
                             {
                                
-                                //Console.WriteLine("over");
-                                //tabletry[point].printtable();
+                                Console.WriteLine("over");
+                                tabletry[point].printtable();
                                 nOfKeys++;
                                 point--;
                                 if (point < 0)
@@ -500,13 +501,15 @@ namespace SudokuData
                 else
                 {
                     //Console.WriteLine("无解");
-                    return -1;
+                    return nOfKeys;
                 }
                 
             }
             else
             {
                 nOfKeys++;
+                Console.WriteLine("over once");
+                this.printtable();
             }
             return nOfKeys;
         }
