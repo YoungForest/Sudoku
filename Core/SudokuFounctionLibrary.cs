@@ -71,6 +71,10 @@ namespace Core
         /// <param name="result">存储终局的数组</param>
         public static void generate(int number, ref int[][,] result)
         {
+            if (number > 1000000 || number < 1)
+            {
+                throw new GenerateNumberOutOfRange();
+            }
             Generator g = new Generator(number);
             try
             {
@@ -118,6 +122,14 @@ namespace Core
         /// <param name="result">存储结果</param>
         public static void generate(int number, int lower, int upper, bool unique, ref int[][,] result)
         {
+            if (number > 1000 || number < 1)
+            {
+                throw new GenerateNumberOutOfRange();
+            }
+            if (lower < 20 || upper > 55)
+            {
+                throw new BoundOutOfRange();
+            }
             generate(number, ref result);
             
             int theNumber = 0;
@@ -339,7 +351,47 @@ namespace Core
     }
 
     [Serializable]
-    internal class ModeOutOfRange : Exception
+    public class BoundOutOfRange : Exception
+    {
+        public BoundOutOfRange()
+        {
+        }
+
+        public BoundOutOfRange(string message) : base(message)
+        {
+        }
+
+        public BoundOutOfRange(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected BoundOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+
+    [Serializable]
+    public class GenerateNumberOutOfRange : Exception
+    {
+        public GenerateNumberOutOfRange()
+        {
+        }
+
+        public GenerateNumberOutOfRange(string message) : base(message)
+        {
+        }
+
+        public GenerateNumberOutOfRange(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected GenerateNumberOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+
+    [Serializable]
+    public class ModeOutOfRange : Exception
     {
         public ModeOutOfRange()
         {

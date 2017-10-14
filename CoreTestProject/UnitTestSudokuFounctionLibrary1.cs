@@ -260,6 +260,36 @@ namespace CoreTestProject
 
         }
 
-        
+        [TestMethod]
+        [ExpectedException(typeof(GenerateNumberOutOfRange))]
+        public void testGenerateNumberOutOfRange1()
+        {
+            int[][,] result = null;
+            Core.SudokuFounctionLibrary.generate(-1, ref result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(GenerateNumberOutOfRange))]
+        public void testGenerateNumberOutOfRange2()
+        {
+            int[][,] result = null;
+            Core.SudokuFounctionLibrary.generate(1001, 2, ref result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ModeOutOfRange))]
+        public void testModeOutOfRange1()
+        {
+            int[][,] result = null;
+            Core.SudokuFounctionLibrary.generate(1001, 4, ref result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BoundOutOfRange))]
+        public void testBoundOutOfRange1()
+        {
+            int[][,] result = null;
+            Core.SudokuFounctionLibrary.generate(1000, 4, 5, true, ref result);
+        }
     }
 }
