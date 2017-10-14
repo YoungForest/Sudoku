@@ -12,52 +12,7 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
-<<<<<<< HEAD
-
-            
-
-
-
-        }
-
-        public static void TestSolve()
-        {
-            int[,] result1 = {
-                { 0 ,0 ,0 ,0 ,0 ,6 ,2 ,0 ,0 },
-                { 7, 0, 0 ,0 ,2 ,0 ,0, 3 ,1 },
-                { 0 ,0, 8, 3 ,0 ,0, 0, 0 ,6 },
-                { 0 ,0, 3, 0 ,0, 7 ,0 ,0 ,0 },
-                { 1 ,0 ,9 ,0 ,0 ,0 ,0 ,0 ,0 },
-                { 8 ,0 ,0, 0 ,6, 0 ,3, 0 ,4 },
-                { 2, 0 ,0 ,0, 7, 0, 4 ,0, 0 },
-                { 0, 4, 0 ,6 ,0 ,0, 0 ,0, 0 },
-                { 0, 8 ,0 ,2, 0, 0, 0, 5, 0 }
-            };
-
-            Table t = new Table();
-            t.creat(result1);
-            int s = t.solve();
-            Console.WriteLine(s);
-
-            Console.ReadLine();
-        }
-
-        public static void Test()
-        {
-            int[][,] result = null;
-            const int number = 1;
-            const int lower = 20;
-            const int upper = 55;
-            const int size = 9;
-            int[] keys = new int[number];
-            int[] digs = new int[number];
-            SudokuFounctionLibrary.generate(number, lower, upper, true, ref result);
-
-            // test
-            for (int i = 0; i < number; i++)
-=======
             if (args.Length == 2)
->>>>>>> 4523cf552ef7b325e2f88c756ec1837248f7c133
             {
                 if (args[0] == "-c")
                 {
