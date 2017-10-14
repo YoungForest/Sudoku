@@ -14,6 +14,7 @@ namespace Core
     public static class SudokuFounctionLibrary
     {
         private static Random rnd = new Random();
+        private const int SIZE = 9;
         private static int[] numbers = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         /// <summary cref="C < T >">
@@ -258,7 +259,6 @@ namespace Core
             using (System.IO.StreamWriter outputfile =
      new System.IO.StreamWriter(filename))
             {
-                const int SIZE = 9;
                 int len = results.Length;
                 for (int i = 0; i < len; i++)
                 {
@@ -272,6 +272,69 @@ namespace Core
                         outputfile.WriteLine();
                     }
                     outputfile.WriteLine();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 从一个文本文件中读取数独
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="results">存储所读取的数独内容</param>
+        public static void ReadPuzzleFromFile(string filename, ref int[][,] results)
+        {
+            try
+            {
+                List<int[,]> puzzles = new List<int[,]>();
+                // Read each line of the file into a string array. Each element
+                // of the array is one line of the file.
+                string[] lines = System.IO.File.ReadAllLines(filename);
+                string[] sublines1 = new string[9];
+                Array.Copy(lines, 0, sublines1, 0, 9);
+                int[,] puzzle1 = null;
+                ReadIntoPuzzle(sublines1, ref puzzle1);
+                puzzles.Add(puzzle1);
+
+                for (int i = 10; i < lines.Length; i += 10)
+                {
+                    string[] sublines = new string[9];
+                    Array.Copy(lines, i, sublines, 0, 9);
+                    int[,] puzzle = null;
+                    ReadIntoPuzzle(sublines, ref puzzle);
+                    puzzles.Add(puzzle);
+                }
+
+                results = puzzles.ToArray();
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 从字符串数组中读取数独
+        /// </summary>
+        /// <param name="lines">9行的数独字符串</param>
+        /// <param name="puzzle">存储数独的数组</param>
+        public static void ReadIntoPuzzle(string[] lines, ref int[,] puzzle)
+        {
+            puzzle = new int[SIZE, SIZE];
+            for (int i = 0; i <= SIZE; i++)
+            {
+                char[] delimiterChars = { ' ' };
+                string[] words = lines[i].Split(delimiterChars);
+
+                for (int j = 0; j <= SIZE; j++)
+                {
+                    try
+                    {
+                        puzzle[i, j] = Int32.Parse(words[j]);
+                    }
+                    catch (FormatException ex)
+                    {
+                        System.Console.WriteLine(ex.Message);
+                    }
                 }
             }
         }
