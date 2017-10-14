@@ -66,7 +66,7 @@ namespace Sudoku
                     return;
                 }
             }
-            else if (args.Length == 4)
+            else if (args.Length == 4 || args.Length == 5)
             {
                 if (args[0] == "-n")
                 {
@@ -81,7 +81,7 @@ namespace Sudoku
                             return;
                         }
 
-                        if (args[2] == "-m")
+                        if (args[2] == "-m" && args.Length == 4)
                         {
                             int mode = Int32.Parse(args[1]);
                             if (mode < 4 && mode > 0)
@@ -95,6 +95,28 @@ namespace Sudoku
                                 Console.WriteLine("<mode> has to be 1, 2 or 3");
                                 HelpMessageOutput();
                                 return;
+                            }
+                        }
+                        else if (args[2] == "-r")
+                        {
+                            var bound = args[3];
+                            var temp = bound.Split('~');
+                            try
+                            {
+                                var lower = Int32.Parse(temp[0]);
+                                var upper = Int32.Parse(temp[1]);
+                                bool unique;
+                                if (args.Length == 5 && args[4] == "-u")
+                                    unique = true;
+                                else
+                                    unique = false;
+                                int[][,] r = null;
+                                Core.SudokuFounctionLibrary.generate(num, lower, upper, unique, ref r);
+                                Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref r);
+                            }
+                            catch (FormatException ex)
+                            {
+                                Console.WriteLine(ex);
                             }
                         }
                         else
