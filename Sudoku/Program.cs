@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SudokuData;
+using Core;
 
 namespace Sudoku
 {
@@ -10,46 +12,30 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
-            // 输入处理
-            if (args.Length < 2 && args.Length > 4)
-            {
-                System.Console.WriteLine("{0} arguments detected.", args.Length);
-                HelpMessageOutput();
-                return;
-            }
-            if (args[0] == "-c")
-            {
-                try
-                {
-                    int num = Int32.Parse(args[1]);
-                    if (num > 1000000 || num < 1)
-                    {
-                        System.Console.WriteLine("Your input <N> is not " +
-                            "between 0 and 1000,000");
-                        return;
-                    }
-                }
-                catch (System.FormatException)
-                {
-                    System.Console.WriteLine("Input <N> was not in a correct format(integer).");
-                    return;
-                }
-            }
-            else if (args[0] == "-s")
-            {
+            /*int[,] result1 = {
+                {0,0,0,9,0,8,1,4,6 },
+                {0,0,0,3,0,0,9,0,7 },
+                {0,0,0,7,0,0,2,3,0 },
+                {1,2,0,0,0,6,7,0,0 },
+                {0,6,3,1,7,9,5,2,0 },
+                {7,0,9,4,0,0,6,1,0 },
+                {3,0,5,0,1,7,0,0,0 },
+                {0,7,1,0,0,0,0,0,0 },
+                {0,0,2,0,9,5,0,0,0 }
+            };
 
-            }
-            else
-            {
-                HelpMessageOutput();
-                return;
-            }
+            Table t = new Table();
+            t.creat(result1);
+            int s = t.solve();
+            Console.WriteLine(s);
+            Console.ReadLine();*/
+
         }
 
         /// <summary>
         /// 打印错误提示
         /// </summary>
-        static void HelpMessageOutput()
+        private void HelpMessageOutput()
         {
             System.Console.WriteLine("Usuage1: sudoku.exe -c <N>");
             System.Console.WriteLine("Generate <N> sudoku final puzzles.Results are stored in 'sudoku.txt'." +

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core;
+using SudokuData;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -167,5 +168,61 @@ namespace CoreTestProject
                 Assert.AreEqual(true, TestValid(result[i]));
             }
         }
+
+        /// <summary>
+        /// 测试 void generate(int number, int lower, int upper, bool unique, ref int[][,] result)接口
+        /// </summary>
+        [TestMethod]
+        public void TestGenerateUnique()
+        {
+            int[][,] result = null;
+            const int number = 20;
+            const int lower = 20;
+            const int upper = 55;
+            const int size = 9;
+            int[] keys = new int[number];
+            int[] digs = new int[number];
+            SudokuFounctionLibrary.generate(number, lower, upper, true, ref result);
+
+            // test
+            for (int i = 0; i < number; i++)
+            {
+                int [,] puzzle = result[i];
+
+                // 测试挖空数目
+                int count = 0;
+
+                for (int j = 0; j < size; j++)
+                {
+                    for (int k = 0; k < size; k++)
+                    {
+                        if (puzzle[j, k] == 0)
+                            count++;
+                    }
+                }
+                digs[i] = count;
+                bool real = count <= upper && count >= lower;
+                bool expected = true;
+
+                //Assert.AreEqual(expected, real);
+
+                // 测试唯一解
+                /*Solver s = new Solver(puzzle);
+                s.Solve();
+                real = s.IsUniqueSolution();
+
+                Assert.AreEqual(expected, real);*/
+                Table t = new Table();
+                t.creat(puzzle);
+                keys[i] = t.solve();
+                Assert.AreEqual(1, keys[i]);
+
+            }
+            //Assert.AreEqual(1, keys[0]);
+            //Assert.AreEqual(true, digs[0] <= upper && digs[0] >= lower);
+
+        }
+
+        
     }
 }
