@@ -470,8 +470,8 @@ namespace SudokuData
                             if (tabletry[point].check() == 1)
                             {
                                
-                                Console.WriteLine("over");
-                                tabletry[point].printtable();
+                                //Console.WriteLine("over");
+                                //tabletry[point].printtable();
                                 nOfKeys++;
                                 point--;
                                 if (point < 0)
@@ -508,8 +508,8 @@ namespace SudokuData
             else
             {
                 nOfKeys++;
-                Console.WriteLine("over once");
-                this.printtable();
+                //Console.WriteLine("over once");
+                //this.printtable();
             }
             return nOfKeys;
         }

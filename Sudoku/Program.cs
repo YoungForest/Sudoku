@@ -12,6 +12,7 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
+<<<<<<< HEAD
 
             
 
@@ -54,63 +55,140 @@ namespace Sudoku
 
             // test
             for (int i = 0; i < number; i++)
+=======
+            if (args.Length == 2)
+>>>>>>> 4523cf552ef7b325e2f88c756ec1837248f7c133
             {
-                int[,] puzzle = result[i];
-
-                // 测试挖空数目
-                int count = 0;
-
-                for (int j = 0; j < size; j++)
+                if (args[0] == "-c")
                 {
-                    for (int k = 0; k < size; k++)
+                    try
                     {
-                        if (puzzle[j, k] == 0)
-                            count++;
+                        int num = Int32.Parse(args[1]);
+                        if (num > 1000000 || num < 1)
+                        {
+                            System.Console.WriteLine("Your input <N> is not " +
+                                "between 0 and 1000,000");
+                            return;
+                        }
+
+                        // begin generate
+                        int[][,] results = null;
+                        Core.SudokuFounctionLibrary.generate(num, ref results);
+                        Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref results);
+                    }
+                    catch (System.FormatException)
+                    {
+                        System.Console.WriteLine("Input <N> was not in a correct format(integer).");
+                        return;
                     }
                 }
-                digs[i] = count;
-                Console.WriteLine("puzzle:");
-                for (int o = 0; o < 9; o++)
+                else if (args[0] == "-s")
                 {
-                    for (int p = 0; p < 9; p++)
+                    // sudoku solve
+                    try
                     {
-                        Console.Write(puzzle[o, p]);
-                        if (p == 8)
+                        int[][,] initPuzzles = null;
+                        Core.SudokuFounctionLibrary.ReadPuzzleFromFile(args[1], ref initPuzzles);
+                        List<int[,]> results = new List<int[,]>();
+
+                        for(int i = 0; i < initPuzzles.Length; i++)
                         {
-                            Console.Write("\n");
+                            int[,] result = null;
+                            Core.SudokuFounctionLibrary.solve(initPuzzles[i], ref result);
+                            results.Add(result);
+                        }
+                        var puzzlesArray = results.ToArray();
+                        Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref puzzlesArray);
+                    }
+                    catch (System.IO.FileNotFoundException ex)
+                    {
+                        System.Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    HelpMessageOutput();
+                    return;
+                }
+            }
+            else if (args.Length == 4 || args.Length == 5)
+            {
+                if (args[0] == "-n")
+                {
+                    try
+                    {
+                        int num = Int32.Parse(args[1]);
+                        if (num > 1000 || num < 1)
+                        {
+                            System.Console.WriteLine("Your input <N> is not " +
+                                "between 0 and 1,000");
+                            HelpMessageOutput();
+                            return;
+                        }
+
+                        if (args[2] == "-m" && args.Length == 4)
+                        {
+                            int mode = Int32.Parse(args[3]);
+                            if (mode < 4 && mode > 0)
+                            {
+                                int[][,] results = null;
+                                Core.SudokuFounctionLibrary.generate(num, mode, ref results);
+                                Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref results);
+                            }
+                            else
+                            {
+                                Console.WriteLine("<mode> has to be 1, 2 or 3");
+                                HelpMessageOutput();
+                                return;
+                            }
+                        }
+                        else if (args[2] == "-r")
+                        {
+                            var bound = args[3];
+                            var temp = bound.Split('~');
+                            try
+                            {
+                                var lower = Int32.Parse(temp[0]);
+                                var upper = Int32.Parse(temp[1]);
+                                bool unique;
+                                if (args.Length == 5 && args[4] == "-u")
+                                    unique = true;
+                                else
+                                    unique = false;
+                                int[][,] r = null;
+                                Core.SudokuFounctionLibrary.generate(num, lower, upper, unique, ref r);
+                                Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref r);
+                            }
+                            catch (FormatException ex)
+                            {
+                                Console.WriteLine(ex);
+                            }
                         }
                         else
                         {
-                            Console.Write(" ");
+                            HelpMessageOutput();
+                            return;
                         }
                     }
-                    if (o == 8)
+                    catch (System.FormatException)
                     {
-                        Console.Write("\n");
+                        System.Console.WriteLine("Input <N> was not in a correct format(integer).");
+                        return;
                     }
                 }
-                Table t = new Table();
-                t.creat(puzzle);
-                int r = t.solve();
-                Console.WriteLine(r);
-
-                //Assert.AreEqual(expected, real);
-
-                // 测试唯一解
-                Solver s = new Solver(puzzle);
-                s.Solve();
-                
-
-
-                //Assert.AreEqual(expected, real);
             }
-            Console.ReadLine();
+            else
+            {
+                System.Console.WriteLine("{0} arguments detected.", args.Length);
+                HelpMessageOutput();
+                return;
+            }
         }
 
         /// <summary>
         /// 打印错误提示
         /// </summary>
-        private void HelpMessageOutput()
+        public static void HelpMessageOutput()
         {
             System.Console.WriteLine("Usuage1: sudoku.exe -c <N>");
             System.Console.WriteLine("Generate <N> sudoku final puzzles.Results are stored in 'sudoku.txt'." +

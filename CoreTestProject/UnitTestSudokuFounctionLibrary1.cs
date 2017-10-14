@@ -14,6 +14,26 @@ namespace CoreTestProject
     public class UnitTestSudokuFounctionLibrary1
     {
         /// <summary>
+        /// 测试solve接口
+        /// </summary>
+        [TestMethod]
+        public void TestSolver()
+        {
+            int[,] puzzle = {{0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 8, 7, 0, 9, 3},
+                {0, 0, 4, 0, 0, 0, 2, 0, 0},
+                {0, 1, 2, 9, 0, 0, 0, 0, 4},
+                {9, 4, 7, 8, 2, 1, 5, 0, 0},
+                {5, 0, 8, 4, 7, 0, 0, 0, 0},
+                {0, 6, 0, 3, 1, 0, 0, 0, 0},
+                {1, 2, 0, 7, 9, 5, 0, 0, 8},
+                {8, 0, 0, 0, 4, 2, 0, 0, 5}};
+            int[,] result = null;
+
+            Core.SudokuFounctionLibrary.solve(puzzle, ref result);
+            Assert.AreEqual(true, TestValid(result));
+        }
+        /// <summary>
         /// 测试GenerateFillList方法，判断确实随机
         /// </summary>
         [TestMethod]
@@ -137,19 +157,17 @@ namespace CoreTestProject
         [TestMethod]
         public void TestSudokuValid3()
         {
-            int[,] puzzle = {
-                {5, 8, 1, 2, 7, 3, 9, 6, 4},
-                {9, 6, 4, 1, 5, 8, 3, 2, 7},
-                {2, 3, 7, 6, 4, 9, 8, 5, 1},
-                {1, 7, 9, 3, 6, 5, 2, 4, 8},
-                {3, 5, 2, 9, 8, 4, 7, 1, 6},
-                {6, 4, 8, 7, 1, 2, 5, 3, 9},
-                {8, 9, 6, 5, 3, 1, 4, 7, 2},
-                {7, 2, 5, 4, 9, 6, 1, 8, 3},
-                {4, 1, 3, 8, 2, 7, 6, 2, 5}
-                };
+            int[,] puzzle = {{3, 9, 1, 2, 6, 4, 8, 5, 7},
+                {2, 5, 6, 1, 8, 7, 4, 9, 3},
+                {7, 8, 4, 5, 3, 9, 2, 6, 1},
+                {6, 1, 2, 9, 5, 3, 7, 8, 4},
+                {9, 4, 7, 8, 2, 1, 5, 3, 6},
+                {5, 3, 8, 4, 7, 6, 1, 2, 9},
+                {4, 6, 5, 3, 1, 8, 9, 7, 2},
+                {1, 2, 3, 7, 9, 5, 6, 4, 8},
+                {8, 7, 9, 6, 4, 2, 3, 1, 5}};
 
-            Assert.AreEqual(false, TestValid(puzzle));
+            Assert.AreEqual(true, TestValid(puzzle));
         }
 
         /// <summary>
@@ -168,6 +186,25 @@ namespace CoreTestProject
                 Assert.AreEqual(true, TestValid(result[i]));
             }
         }
+
+        [TestMethod]
+        public void TestASudoku()
+        {
+            int[,] puzzle = {{0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 8, 7, 0, 9, 3},
+                {0, 0, 4, 0, 0, 0, 2, 0, 0},
+                {0, 1, 2, 9, 0, 0, 0, 0, 4},
+                {9, 4, 7, 8, 2, 1, 5, 0, 0},
+                {5, 0, 8, 4, 7, 0, 0, 0, 0},
+                {0, 6, 0, 3, 1, 0, 0, 0, 0},
+                {1, 2, 0, 7, 9, 5, 0, 0, 8},
+                {8, 0, 0, 0, 4, 2, 0, 0, 5}};
+
+            Solver s = new Solver(puzzle);
+            s.Solve();
+            Assert.AreEqual(true, s.count > 0);
+        }
+
 
         /// <summary>
         /// 测试 void generate(int number, int lower, int upper, bool unique, ref int[][,] result)接口
@@ -223,6 +260,36 @@ namespace CoreTestProject
 
         }
 
-        
+        [TestMethod]
+        [ExpectedException(typeof(GenerateNumberOutOfRange))]
+        public void testGenerateNumberOutOfRange1()
+        {
+            int[][,] result = null;
+            Core.SudokuFounctionLibrary.generate(-1, ref result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(GenerateNumberOutOfRange))]
+        public void testGenerateNumberOutOfRange2()
+        {
+            int[][,] result = null;
+            Core.SudokuFounctionLibrary.generate(1001, 2, ref result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ModeOutOfRange))]
+        public void testModeOutOfRange1()
+        {
+            int[][,] result = null;
+            Core.SudokuFounctionLibrary.generate(1001, 4, ref result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BoundOutOfRange))]
+        public void testBoundOutOfRange1()
+        {
+            int[][,] result = null;
+            Core.SudokuFounctionLibrary.generate(1000, 4, 5, true, ref result);
+        }
     }
 }

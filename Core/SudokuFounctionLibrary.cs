@@ -4,7 +4,7 @@ using System.Linq;
 using SudokuData;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Runtime.Serialization;
 
 namespace Core
 {
@@ -14,6 +14,7 @@ namespace Core
     public static class SudokuFounctionLibrary
     {
         private static Random rnd = new Random();
+        private const int SIZE = 9;
         private static int[] numbers = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         /// <summary cref="C < T >">
@@ -70,6 +71,10 @@ namespace Core
         /// <param name="result">存储终局的数组</param>
         public static void generate(int number, ref int[][,] result)
         {
+            if (number > 1000000 || number < 1)
+            {
+                throw new GenerateNumberOutOfRange();
+            }
             Generator g = new Generator(number);
             try
             {
@@ -101,9 +106,7 @@ namespace Core
                     generate(number, 55, 59, false, ref result);
                     break;
                 default:
-                    generate(number, 55, 59, false, ref result);
-                    break;
-
+                    throw new ModeOutOfRange();
             }
 
 
@@ -119,6 +122,14 @@ namespace Core
         /// <param name="result">存储结果</param>
         public static void generate(int number, int lower, int upper, bool unique, ref int[][,] result)
         {
+            if (number > 1000 || number < 1)
+            {
+                throw new GenerateNumberOutOfRange();
+            }
+            if (lower < 20 || upper > 55)
+            {
+                throw new BoundOutOfRange();
+            }
             generate(number, ref result);
             
             int theNumber = 0;
@@ -218,11 +229,12 @@ namespace Core
             solver.Solve();
 
             if (solver.success)
-                solution = solver.puzzle;
+                solution = solver.solution;
 
             return solver.success;
         }
-        //打印数独
+       
+        //打印数独到标准输出
         public static void printTable(int[,] puzzle)
         {
             for (int o = 0; o < 9; o++)
@@ -244,6 +256,157 @@ namespace Core
                     Console.Write("\n");
                 }
             }
+        }
+
+        /// <summary>
+        /// 输出数独到文件
+        /// </summary>
+        /// <param name="filename">目标文件路径</param>
+        /// <param name="results">存储数独</param>
+        public static void PrintPuzzleToFile(string filename, ref int[][,] results)
+        {
+            // clear the content of target file
+            using (System.IO.StreamWriter outputfile =
+     new System.IO.StreamWriter(filename))
+            {
+                int len = results.Length;
+                for (int i = 0; i < len; i++)
+                {
+                    int[,] puzzle = results[i];
+                    for (int j = 0; j < SIZE; j++)
+                    {
+                        for (int k = 0; k < SIZE; k++)
+                        {
+                            outputfile.Write("{0} ", puzzle[j, k]);
+                        }
+                        outputfile.WriteLine();
+                    }
+                    outputfile.WriteLine();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 从一个文本文件中读取数独
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="results">存储所读取的数独内容</param>
+        public static void ReadPuzzleFromFile(string filename, ref int[][,] results)
+        {
+            try
+            {
+                List<int[,]> puzzles = new List<int[,]>();
+                // Read each line of the file into a string array. Each element
+                // of the array is one line of the file.
+                string[] lines = System.IO.File.ReadAllLines(filename);
+                string[] sublines1 = new string[9];
+                Array.Copy(lines, 0, sublines1, 0, 9);
+                int[,] puzzle1 = null;
+                ReadIntoPuzzle(sublines1, ref puzzle1);
+                puzzles.Add(puzzle1);
+
+                for (int i = 10; i < lines.Length; i += 10)
+                {
+                    string[] sublines = new string[9];
+                    Array.Copy(lines, i, sublines, 0, 9);
+                    int[,] puzzle = null;
+                    ReadIntoPuzzle(sublines, ref puzzle);
+                    puzzles.Add(puzzle);
+                }
+
+                results = puzzles.ToArray();
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 从字符串数组中读取数独
+        /// </summary>
+        /// <param name="lines">9行的数独字符串</param>
+        /// <param name="puzzle">存储数独的数组</param>
+        public static void ReadIntoPuzzle(string[] lines, ref int[,] puzzle)
+        {
+            puzzle = new int[SIZE, SIZE];
+            for (int i = 0; i <= SIZE; i++)
+            {
+                char[] delimiterChars = { ' ' };
+                string[] words = lines[i].Split(delimiterChars);
+
+                for (int j = 0; j <= SIZE; j++)
+                {
+                    try
+                    {
+                        puzzle[i, j] = Int32.Parse(words[j]);
+                    }
+                    catch (FormatException ex)
+                    {
+                        System.Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
+    }
+
+    [Serializable]
+    public class BoundOutOfRange : Exception
+    {
+        public BoundOutOfRange()
+        {
+        }
+
+        public BoundOutOfRange(string message) : base(message)
+        {
+        }
+
+        public BoundOutOfRange(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected BoundOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+
+    [Serializable]
+    public class GenerateNumberOutOfRange : Exception
+    {
+        public GenerateNumberOutOfRange()
+        {
+        }
+
+        public GenerateNumberOutOfRange(string message) : base(message)
+        {
+        }
+
+        public GenerateNumberOutOfRange(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected GenerateNumberOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+
+    [Serializable]
+    public class ModeOutOfRange : Exception
+    {
+        public ModeOutOfRange()
+        {
+        }
+
+        public ModeOutOfRange(string message) : base(message)
+        {
+        }
+
+        public ModeOutOfRange(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected ModeOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }
