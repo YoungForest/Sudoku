@@ -4,7 +4,7 @@ using System.Linq;
 using SudokuData;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Runtime.Serialization;
 
 namespace Core
 {
@@ -102,9 +102,7 @@ namespace Core
                     generate(number, 55, 59, false, ref result);
                     break;
                 default:
-                    generate(number, 55, 59, false, ref result);
-                    break;
-
+                    throw new ModeOutOfRange();
             }
 
 
@@ -337,6 +335,26 @@ namespace Core
                     }
                 }
             }
+        }
+    }
+
+    [Serializable]
+    internal class ModeOutOfRange : Exception
+    {
+        public ModeOutOfRange()
+        {
+        }
+
+        public ModeOutOfRange(string message) : base(message)
+        {
+        }
+
+        public ModeOutOfRange(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected ModeOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }

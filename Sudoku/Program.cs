@@ -83,12 +83,12 @@ namespace Sudoku
 
                         if (args[2] == "-m" && args.Length == 4)
                         {
-                            int mode = Int32.Parse(args[1]);
+                            int mode = Int32.Parse(args[3]);
                             if (mode < 4 && mode > 0)
                             {
-                                int[][,] resultsm = null;
-                                Core.SudokuFounctionLibrary.generate(num, mode, ref resultsm);
-                                Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref resultsm);
+                                int[][,] results = null;
+                                Core.SudokuFounctionLibrary.generate(num, mode, ref results);
+                                Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref results);
                             }
                             else
                             {
@@ -124,10 +124,6 @@ namespace Sudoku
                             HelpMessageOutput();
                             return;
                         }
-                        // begin generate
-                        int[][,] results = null;
-                        Core.SudokuFounctionLibrary.generate(num, ref results);
-                        Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref results);
                     }
                     catch (System.FormatException)
                     {
