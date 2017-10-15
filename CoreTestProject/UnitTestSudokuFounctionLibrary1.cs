@@ -213,8 +213,8 @@ namespace CoreTestProject
         public void TestGenerateUnique()
         {
             int[][,] result = null;
-            const int number = 20;
-            const int lower = 20;
+            const int number =1;
+            const int lower = 50;
             const int upper = 55;
             const int size = 9;
             int[] keys = new int[number];
@@ -238,17 +238,17 @@ namespace CoreTestProject
                     }
                 }
                 digs[i] = count;
-                bool real = count <= upper && count >= lower;
+                bool real = (count <= upper && count >= lower);
                 bool expected = true;
 
-                //Assert.AreEqual(expected, real);
+                Assert.AreEqual(expected, real);
 
                 // 测试唯一解
                 Solver s = new Solver(puzzle);
                 s.Solve();
                 real = s.IsUniqueSolution();
 
-                Assert.AreEqual(expected, real);
+                //Assert.AreEqual(expected, real);
                 /*Table t = new Table();
                 t.creat(puzzle);
                 keys[i] = t.solve();
