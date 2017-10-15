@@ -10,12 +10,12 @@ namespace Core
     public class Solver
     {
         public int[,] puzzle;
-        public int[,] solution = new int[9,9];
+        public int[,] solution = new int[9, 9];
         public const int SIZE = 8;
         public bool success = false;
         public int count = 0;
 
-        public Solver(int [,] p)
+        public Solver(int[,] p)
         {
             puzzle = p;
         }
@@ -131,18 +131,6 @@ namespace Core
     internal class PuzzleCompleteException : Exception
     {
         public PuzzleCompleteException()
-        {
-        }
-
-        public PuzzleCompleteException(string message) : base(message)
-        {
-        }
-
-        public PuzzleCompleteException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected PuzzleCompleteException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

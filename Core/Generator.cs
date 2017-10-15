@@ -9,7 +9,7 @@ namespace Core
     /// <summary cref="C < T >">
     /// 数独生成器
     /// </summary>  
-    public class Generator
+            class Generator
     {
         public int[,] grid = new int[9, 9];
         const int LAST = 8;

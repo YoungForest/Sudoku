@@ -80,7 +80,7 @@ namespace Core
             {
                 g.FillNextGrid(0, 0);
             }
-            catch(EnoughResultsException)
+            catch (EnoughResultsException)
             {
                 result = g.results.ToArray();
             }
@@ -97,7 +97,11 @@ namespace Core
             switch (mode)
             {
                 case 1:
+<<<<<<< HEAD
                     generateForGUI(number, 45, 49, true,ref result);
+=======
+                    generate(number, 45, 49, true, ref result);
+>>>>>>> 43709278cdd9c85e0c0a0e2ad59ab00a50694ec8
                     break;
                 case 2:
                     generateForGUI(number, 50, 54, true, ref result);
@@ -126,14 +130,14 @@ namespace Core
             {
                 throw new GenerateNumberOutOfRange();
             }
-            if (lower < 20 || upper > 55)
+            if (lower < 20 || upper > 59)
             {
                 throw new BoundOutOfRange();
             }
             generate(number, ref result);
-            
+
             int theNumber = 0;
-            for (int index = 0; index < number; index ++)
+            for (int index = 0; index < number; index++)
             {
                 // 挖空
                 var rnd = new Random();
@@ -178,7 +182,7 @@ namespace Core
                             Table t = new Table();
                             t.creat(result[index]);
                             int s = t.solve();
-                            if (s !=1)
+                            if (s != 1)
                             {
                                 result[index][basex + digx, basey + digy] = theNumber;
                                 diged--;
@@ -345,30 +349,6 @@ namespace Core
 
             return solver.success;
         }
-       
-        //打印数独到标准输出
-        public static void printTable(int[,] puzzle)
-        {
-            for (int o = 0; o < 9; o++)
-            {
-                for (int p = 0; p < 9; p++)
-                {
-                    Console.Write(puzzle[o, p]);
-                    if (p == 8)
-                    {
-                        Console.Write("\n");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
-                }
-                if (o == 8)
-                {
-                    Console.Write("\n");
-                }
-            }
-        }
 
         /// <summary>
         /// 输出数独到文件
@@ -442,12 +422,12 @@ namespace Core
         public static void ReadIntoPuzzle(string[] lines, ref int[,] puzzle)
         {
             puzzle = new int[SIZE, SIZE];
-            for (int i = 0; i <= SIZE; i++)
+            for (int i = 0; i < SIZE; i++)
             {
                 char[] delimiterChars = { ' ' };
                 string[] words = lines[i].Split(delimiterChars);
 
-                for (int j = 0; j <= SIZE; j++)
+                for (int j = 0; j < SIZE; j++)
                 {
                     try
                     {
@@ -468,18 +448,6 @@ namespace Core
         public BoundOutOfRange()
         {
         }
-
-        public BoundOutOfRange(string message) : base(message)
-        {
-        }
-
-        public BoundOutOfRange(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected BoundOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 
     [Serializable]
@@ -488,36 +456,12 @@ namespace Core
         public GenerateNumberOutOfRange()
         {
         }
-
-        public GenerateNumberOutOfRange(string message) : base(message)
-        {
-        }
-
-        public GenerateNumberOutOfRange(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected GenerateNumberOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 
     [Serializable]
     public class ModeOutOfRange : Exception
     {
         public ModeOutOfRange()
-        {
-        }
-
-        public ModeOutOfRange(string message) : base(message)
-        {
-        }
-
-        public ModeOutOfRange(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected ModeOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

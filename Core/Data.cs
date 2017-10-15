@@ -59,9 +59,9 @@ namespace SudokuData
         public int[] count;
     }
 
-    
 
-    
+
+
 
     public class Table
     {
@@ -137,7 +137,7 @@ namespace SudokuData
 
         public void copy(Table t)
         {
-            for(int i = 0; i < 81; i++)
+            for (int i = 0; i < 81; i++)
             {
                 if (t.blocks[i].numbers[0] != 0)
                 {
@@ -146,7 +146,7 @@ namespace SudokuData
             }
         }
 
-        public void creat(int [ ,] puzzle)
+        public void creat(int[,] puzzle)
         {
             int i, j;
             for (i = 0; i < 9; i++)
@@ -211,7 +211,7 @@ namespace SudokuData
                     }
                 }
             }
-            
+
             return this;
         }
 
@@ -405,33 +405,11 @@ namespace SudokuData
             return 0;
         }
 
-        void printtable()
-        {
-            int i, j;
-            Console.Write("\n");
-            for (i = 0; i < 9; i++)
-            {
-                for (j = 0; j < 9; j++)
-                {
-                    
-                    Console.Write(this.blocks[i * 9 + j].numbers[0]);
-                    if (j == 8)
-                    {
-                        Console.Write("\n");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
-                }
-            }
-        }
-
         public int solve()
         {
-            
-            Table[] tabletry=new Table[200];
-            
+
+            Table[] tabletry = new Table[200];
+
             int nOfKeys = 0;
             int error = 0;
             int point = 0;
@@ -439,7 +417,7 @@ namespace SudokuData
             int exit = 0;
             exit = this.work1();
             int end = 0;
-            end=this.check();
+            end = this.check();
             if (end == 0)
             {
                 tabletry[point] = new Table();
@@ -455,7 +433,7 @@ namespace SudokuData
                     while (true)
                     {
                         error = tabletry[point].work1();
-                        
+
                         if (error == -1)
                         {
                             point--;
@@ -469,7 +447,7 @@ namespace SudokuData
                         {
                             if (tabletry[point].check() == 1)
                             {
-                               
+
                                 //Console.WriteLine("over");
                                 //tabletry[point].printtable();
                                 nOfKeys++;
@@ -478,12 +456,12 @@ namespace SudokuData
                                 {
                                     break;
                                 }
-                               
+
                             }
                             else
                             {
                                 tryi = tabletry[point].tryi;
-                                tryn[0]= tabletry[point].tryn[0];
+                                tryn[0] = tabletry[point].tryn[0];
                                 tryn[1] = tabletry[point].tryn[1];
                                 point++;
                                 tabletry[point] = new Table();
@@ -492,8 +470,8 @@ namespace SudokuData
                                 tabletry[point].fill(tryi, tryn[1]);
                                 point++;
                                 tabletry[point].fill(tryi, tryn[0]);
-                                
-                                
+
+
                             }
                         }
                     }
@@ -503,7 +481,7 @@ namespace SudokuData
                     //Console.WriteLine("无解");
                     return nOfKeys;
                 }
-                
+
             }
             else
             {
