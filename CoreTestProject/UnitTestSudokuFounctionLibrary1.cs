@@ -213,13 +213,8 @@ namespace CoreTestProject
         public void TestGenerateUnique()
         {
             int[][,] result = null;
-<<<<<<< HEAD
             const int number =1;
             const int lower = 50;
-=======
-            const int number = 20;
-            const int lower = 20;
->>>>>>> 43709278cdd9c85e0c0a0e2ad59ab00a50694ec8
             const int upper = 55;
             const int size = 9;
             int[] keys = new int[number];

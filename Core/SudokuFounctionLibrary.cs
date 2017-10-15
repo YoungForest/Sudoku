@@ -97,11 +97,7 @@ namespace Core
             switch (mode)
             {
                 case 1:
-<<<<<<< HEAD
                     generateForGUI(number, 45, 49, true,ref result);
-=======
-                    generate(number, 45, 49, true, ref result);
->>>>>>> 43709278cdd9c85e0c0a0e2ad59ab00a50694ec8
                     break;
                 case 2:
                     generateForGUI(number, 50, 54, true, ref result);
