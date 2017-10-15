@@ -8,5 +8,5 @@
 [作业要求](http://www.cnblogs.com/jiel/p/7604111.html)
 
 ## 总结博客
-- [YoungForest](To be filled.)
-- [zhaobs-yu](To be filled.)
+- [YoungForest](http://www.cnblogs.com/YoungForest/p/7669448.html)
+- [zhaobs-yu](http://www.cnblogs.com/zhaobs/p/7670636.html)
