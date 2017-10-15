@@ -405,28 +405,6 @@ namespace SudokuData
             return 0;
         }
 
-        void printtable()
-        {
-            int i, j;
-            Console.Write("\n");
-            for (i = 0; i < 9; i++)
-            {
-                for (j = 0; j < 9; j++)
-                {
-
-                    Console.Write(this.blocks[i * 9 + j].numbers[0]);
-                    if (j == 8)
-                    {
-                        Console.Write("\n");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
-                }
-            }
-        }
-
         public int solve()
         {
 

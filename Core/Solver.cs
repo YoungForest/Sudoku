@@ -133,17 +133,5 @@ namespace Core
         public PuzzleCompleteException()
         {
         }
-
-        public PuzzleCompleteException(string message) : base(message)
-        {
-        }
-
-        public PuzzleCompleteException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected PuzzleCompleteException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }

@@ -260,6 +260,56 @@ namespace CoreTestProject
 
         }
 
+        /// <summary>
+        /// Test void generate(int number, int mode, ref int[][,] result) when mode = 1
+        /// </summary>
+        [TestMethod]
+        public void TestGenerateMode1()
+        {
+            int[][,] r = null;
+            Core.SudokuFounctionLibrary.generate(10, 1, ref r);
+        }
+
+        /// <summary>
+        /// Test void generate(int number, int mode, ref int[][,] result) when mode = 3
+        /// </summary>
+        [TestMethod]
+        public void TestGenerateMode3()
+        {
+            int[][,] r = null;
+            Core.SudokuFounctionLibrary.generate(10, 3, ref r);
+        }
+
+        [TestMethod]
+        public void TestPrintPuzzleToFile()
+        {
+            int[,] puzzle = {{3, 9, 1, 2, 6, 4, 8, 5, 7},
+                {2, 5, 6, 1, 8, 7, 4, 9, 3},
+                {7, 8, 4, 5, 3, 9, 2, 6, 1},
+                {6, 1, 2, 9, 5, 3, 7, 8, 4},
+                {9, 4, 7, 8, 2, 1, 5, 3, 6},
+                {5, 3, 8, 4, 7, 6, 1, 2, 9},
+                {4, 6, 5, 3, 1, 8, 9, 7, 2},
+                {1, 2, 3, 7, 9, 5, 6, 4, 8},
+                {8, 7, 9, 6, 4, 2, 3, 1, 5}};
+            int [][,] puzzles = new int[1][,];
+            puzzles[0] = puzzle;
+            Core.SudokuFounctionLibrary.PrintPuzzleToFile(@"sudoku.txt", ref puzzles);
+
+            int[][,] readPuzzles = null;
+            Core.SudokuFounctionLibrary.ReadPuzzleFromFile(@"sudoku.txt", ref readPuzzles);
+
+            Assert.AreEqual(true, puzzles.Length == readPuzzles.Length);
+
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    Assert.AreEqual(puzzles[0][i, j], readPuzzles[0][i, j]);
+                }
+            }
+        }
+
         [TestMethod]
         [ExpectedException(typeof(GenerateNumberOutOfRange))]
         public void testGenerateNumberOutOfRange1()

@@ -126,7 +126,7 @@ namespace Core
             {
                 throw new GenerateNumberOutOfRange();
             }
-            if (lower < 20 || upper > 55)
+            if (lower < 20 || upper > 59)
             {
                 throw new BoundOutOfRange();
             }
@@ -234,30 +234,6 @@ namespace Core
             return solver.success;
         }
 
-        //打印数独到标准输出
-        public static void printTable(int[,] puzzle)
-        {
-            for (int o = 0; o < 9; o++)
-            {
-                for (int p = 0; p < 9; p++)
-                {
-                    Console.Write(puzzle[o, p]);
-                    if (p == 8)
-                    {
-                        Console.Write("\n");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
-                }
-                if (o == 8)
-                {
-                    Console.Write("\n");
-                }
-            }
-        }
-
         /// <summary>
         /// 输出数独到文件
         /// </summary>
@@ -330,12 +306,12 @@ namespace Core
         public static void ReadIntoPuzzle(string[] lines, ref int[,] puzzle)
         {
             puzzle = new int[SIZE, SIZE];
-            for (int i = 0; i <= SIZE; i++)
+            for (int i = 0; i < SIZE; i++)
             {
                 char[] delimiterChars = { ' ' };
                 string[] words = lines[i].Split(delimiterChars);
 
-                for (int j = 0; j <= SIZE; j++)
+                for (int j = 0; j < SIZE; j++)
                 {
                     try
                     {
@@ -356,18 +332,6 @@ namespace Core
         public BoundOutOfRange()
         {
         }
-
-        public BoundOutOfRange(string message) : base(message)
-        {
-        }
-
-        public BoundOutOfRange(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected BoundOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 
     [Serializable]
@@ -376,36 +340,12 @@ namespace Core
         public GenerateNumberOutOfRange()
         {
         }
-
-        public GenerateNumberOutOfRange(string message) : base(message)
-        {
-        }
-
-        public GenerateNumberOutOfRange(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected GenerateNumberOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 
     [Serializable]
     public class ModeOutOfRange : Exception
     {
         public ModeOutOfRange()
-        {
-        }
-
-        public ModeOutOfRange(string message) : base(message)
-        {
-        }
-
-        public ModeOutOfRange(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected ModeOutOfRange(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }
