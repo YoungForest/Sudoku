@@ -97,13 +97,13 @@ namespace Core
             switch (mode)
             {
                 case 1:
-                    generate(number, 45, 49, true,ref result);
+                    generateForGUI(number, 45, 49, true,ref result);
                     break;
                 case 2:
-                    generate(number, 50, 54, true, ref result);
+                    generateForGUI(number, 50, 54, true, ref result);
                     break;
                 case 3:
-                    generate(number, 55, 59, true, ref result);
+                    generateForGUI(number, 55, 59, true, ref result);
                     break;
                 default:
                     throw new ModeOutOfRange();
@@ -150,6 +150,7 @@ namespace Core
                 while (digNumbers.Sum() > upper || digNumbers.Sum() < lower);
                 int target = digNumbers.Sum();
                 int diged = 0;
+                int trinum = 0;
                 var tried = new int[9, 9];
                 // 挖空，即标志该位为0
                 var grids = new int[,] { {0, 0}, {0, 1}, {0, 2},
@@ -170,6 +171,7 @@ namespace Core
                         theNumber = result[index][basex + digx, basey + digy];
                         result[index][basex + digx, basey + digy] = 0;
                         tried[basex + digx, basey + digy] = 1;
+                        trinum++;
                         diged++;
                         if (unique)
                         {
@@ -184,6 +186,7 @@ namespace Core
                         }
                     }
                 }
+              
                 if (unique)
                 {
                     while (diged < target)
@@ -195,10 +198,119 @@ namespace Core
                             dx = rnd.Next(0, 9);
                             dy = rnd.Next(0, 9);
                         }
-                        while (tried[dx, dy] == 0);
+                        while (tried[dx, dy] == 1);
                         theNumber = result[index][dx, dy];
                         result[index][dx, dy] = 0;
                         tried[dx, dy] = 1;
+                        trinum++;
+                        if (trinum > 75)
+                        {
+                            break;
+                        }
+                        diged++;
+                        Table t = new Table();
+                        t.creat(result[index]);
+                        int s = t.solve();
+                        if (s != 1)
+                        {
+                            result[index][dx, dy] = theNumber;
+                            diged--;
+                        }
+                    }
+                }
+             
+
+            }
+
+
+        }
+
+        public static void generateForGUI(int number, int lower, int upper, bool unique, ref int[][,] result)
+        {
+            if (number > 1000 || number < 1)
+            {
+                throw new GenerateNumberOutOfRange();
+            }
+            if (lower < 20 || upper > 59)
+            {
+                throw new BoundOutOfRange();
+            }
+            generate(number, ref result);
+
+            int theNumber = 0;
+            for (int index = 0; index < number; index++)
+            {
+                // 挖空
+                var rnd = new Random();
+                var digNumbers = new int[9];
+
+                // 生成9个随机数 range: 2~9;
+                do
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        digNumbers[i] = rnd.Next(2, 10);
+                    }
+                }
+                while (digNumbers.Sum() > upper || digNumbers.Sum() < lower);
+                int target = digNumbers.Sum();
+                int diged = 0;
+                int trinum = 0;
+                var tried = new int[9, 9];
+                // 挖空，即标志该位为0
+                var grids = new int[,] { {0, 0}, {0, 1}, {0, 2},
+                                         {1, 0}, {1, 1}, {1, 2},
+                                         {2, 0}, {2, 1}, {2, 2} };
+                int[] numbers = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+
+                for (int i = 0; i < 9; i++)
+                {
+                    int basex = (i / 3) * 3;
+                    int basey = (i % 3) * 3;
+                    int[] MyRandomNumbers = numbers.OrderBy(x => rnd.Next()).ToArray();
+
+                    for (int j = 0; j < digNumbers[i]; j++)
+                    {
+                        int digx = grids[MyRandomNumbers[j], 0];
+                        int digy = grids[MyRandomNumbers[j], 1];
+                        theNumber = result[index][basex + digx, basey + digy];
+                        result[index][basex + digx, basey + digy] = 0;
+                        tried[basex + digx, basey + digy] = 1;
+                        trinum++;
+                        diged++;
+                        if (unique)
+                        {
+                            Table t = new Table();
+                            t.creat(result[index]);
+                            int s = t.solve();
+                            if (s != 1)
+                            {
+                                result[index][basex + digx, basey + digy] = theNumber;
+                                diged--;
+                            }
+                        }
+                    }
+                }
+                if (unique)
+                {
+                    while (diged < target )
+                    {
+                        int dx = 0;
+                        int dy = 0;
+                        do
+                        {
+                            dx = rnd.Next(0, 9);
+                            dy = rnd.Next(0, 9);
+                        }
+                        while (tried[dx, dy] == 1);
+                        theNumber = result[index][dx, dy];
+                        result[index][dx, dy] = 0;
+                        tried[dx, dy] = 1;
+                        trinum++;
+                        if (trinum > 75)
+                        {
+                            break;
+                        }
                         diged++;
                         Table t = new Table();
                         t.creat(result[index]);
